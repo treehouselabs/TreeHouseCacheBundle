@@ -69,12 +69,12 @@ class Configuration implements ConfigurationInterface
                             ->end()
 
                             ->enumNode('serializer')
-                                ->defaultValue(CacheInterface::SERIALIZE_AUTO)
+                                ->defaultValue('auto')
                                 ->values([
-                                    CacheInterface::SERIALIZE_AUTO,
-                                    CacheInterface::SERIALIZE_IGBINARY,
-                                    CacheInterface::SERIALIZE_JSON,
-                                    CacheInterface::SERIALIZE_PHP,
+                                    'auto',
+                                    'igbinary',
+                                    'json',
+                                    'php',
                                 ])
                             ->end()
 
