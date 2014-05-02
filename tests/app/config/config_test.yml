@@ -1,0 +1,43 @@
+framework:
+  secret:          secret
+  test:            ~
+  router:          { resource: "%kernel.root_dir%/routing_test.yml" }
+  form:            true
+  csrf_protection: true
+  validation:      { enable_annotations: true }
+  templating:      { engines: ['twig'] }
+  session:
+    storage_id:    session.storage.mock_file
+  profiler:        { only_exceptions: false }
+
+doctrine:
+  dbal:
+    driver:   pdo_sqlite
+    host:     ~
+    port:     ~
+    dbname:   ~
+    user:     ~
+    password: ~
+    logging:  %kernel.debug%
+    path:     "/tmp/data.sqlite"
+    charset:  UTF8
+
+  orm:
+    auto_generate_proxy_classes: %kernel.debug%
+    auto_mapping: true
+    metadata_cache_driver: array
+    result_cache_driver:
+      type:           memcached
+      host:           localhost
+      port:           11211
+      instance_class: Memcached
+      class:          Doctrine\Common\Cache\MemcachedCache
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+
+tree_house_cache:
+  clients:
+    test:
+      type: memcached
+      dsn: memcached://localhost
+  orm:
+    client: test
