@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ab82b87c52664c065b35f9eefe8c71e3",
+    "hash": "bdfc757c950120d0707bdd7486b74401",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -881,16 +881,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/treehouselabs/cache.git",
-                "reference": "134f2a1b200e158c6a1fa2d2718e6b4f60a82f2b"
+                "reference": "8cbc84d9a153ee90ce3b2120c430a85e24e90b18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/treehouselabs/cache/zipball/134f2a1b200e158c6a1fa2d2718e6b4f60a82f2b",
-                "reference": "134f2a1b200e158c6a1fa2d2718e6b4f60a82f2b",
+                "url": "https://api.github.com/repos/treehouselabs/cache/zipball/8cbc84d9a153ee90ce3b2120c430a85e24e90b18",
+                "reference": "8cbc84d9a153ee90ce3b2120c430a85e24e90b18",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5"
+                "php": ">=5.4"
             },
             "require-dev": {
                 "ext-memcached": "*",
@@ -919,7 +919,7 @@
             "keywords": [
                 "cache"
             ],
-            "time": "2014-05-01 06:57:42"
+            "time": "2014-05-20 09:04:06"
         },
         {
             "name": "twig/twig",
@@ -1640,9 +1640,7 @@
         "treehouselabs/cache": 20
     },
     "platform": {
-        "php": ">=5.5"
+        "php": ">=5.4"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
