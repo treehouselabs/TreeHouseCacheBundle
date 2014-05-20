@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "bdfc757c950120d0707bdd7486b74401",
+    "hash": "b2673514d2d9484a32809ea279d8ddf8",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -877,16 +877,16 @@
         },
         {
             "name": "treehouselabs/cache",
-            "version": "dev-master",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/treehouselabs/cache.git",
-                "reference": "8cbc84d9a153ee90ce3b2120c430a85e24e90b18"
+                "reference": "50f43caebe00b70904b8c744e0305c610bdbeccb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/treehouselabs/cache/zipball/8cbc84d9a153ee90ce3b2120c430a85e24e90b18",
-                "reference": "8cbc84d9a153ee90ce3b2120c430a85e24e90b18",
+                "url": "https://api.github.com/repos/treehouselabs/cache/zipball/50f43caebe00b70904b8c744e0305c610bdbeccb",
+                "reference": "50f43caebe00b70904b8c744e0305c610bdbeccb",
                 "shasum": ""
             },
             "require": {
@@ -919,7 +919,7 @@
             "keywords": [
                 "cache"
             ],
-            "time": "2014-05-20 09:04:06"
+            "time": "2014-05-20 09:16:37"
         },
         {
             "name": "twig/twig",
@@ -1627,20 +1627,11 @@
             "time": "2014-03-07 15:35:33"
         }
     ],
-    "aliases": [
-        {
-            "alias": "1.0",
-            "alias_normalized": "1.0.0.0",
-            "version": "9999999-dev",
-            "package": "treehouselabs/cache"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "treehouselabs/cache": 20
-    },
+    "stability-flags": [],
     "platform": {
-        "php": ">=5.4"
+        "php": ">=5.5"
     },
     "platform-dev": []
 }
