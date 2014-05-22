@@ -16,10 +16,10 @@
     "symfony/symfony": "~2.3",
     "doctrine/orm": "~2.2,>=2.2.3",
     "doctrine/doctrine-bundle": "~1.2",
-    "treehouselabs/cache": "~1.0"
+    "treehouselabs/cache": "~1.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.0"
+    "phpunit/phpunit": "~4.1"
   },
   "autoload": {
     "psr-4": { "TreeHouse\\CacheBundle\\": "src/TreeHouse/CacheBundle/" }
