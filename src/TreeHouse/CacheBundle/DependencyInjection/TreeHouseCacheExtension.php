@@ -4,6 +4,7 @@ namespace TreeHouse\CacheBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
@@ -32,10 +33,11 @@ class TreeHouseCacheExtension extends Extension
             $this->loadCache($id, $clientConfig, $container);
         }
 
-        // load orm cache
-        if (isset($config['orm']['client'])) {
-            $this->loadOrmCache($config['orm']['client'], $container);
-        }
+        // load doctrine
+        $this->loadDoctrineConfiguration($config, $container);
+
+        // load session
+        $this->loadSessionConfiguration($config, $container);
     }
 
     /**
@@ -259,12 +261,87 @@ class TreeHouseCacheExtension extends Extension
     }
 
     /**
-     * @param string           $clientName
-     * @param ContainerBuilder $container
+     * Loads the Doctrine configuration.
+     *
+     * @param array            $config    A configuration array
+     * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    protected function loadOrmCache($clientName, ContainerBuilder $container)
+    protected function loadDoctrineConfiguration(array $config, ContainerBuilder $container)
     {
-        $entityCache = $container->getDefinition('tree_house_cache.orm.entity_cache');
-        $entityCache->replaceArgument(0, new Reference(sprintf('tree_house_cache.client.%s', $clientName)));
+        if (!isset($config['doctrine'])) {
+            return;
+        }
+
+        if (isset($config['doctrine']['cached_entity_manager'])) {
+            $client = sprintf('tree_house_cache.client.%s', $config['doctrine']['cached_entity_manager']['client']);
+            $entityCache = $container->getDefinition('tree_house_cache.orm.entity_cache');
+            $entityCache->replaceArgument(0, new Reference($client));
+        }
+
+        foreach (['metadata_cache', 'result_cache', 'query_cache'] as $type) {
+            if (!isset($config['doctrine'][$type])) {
+                continue;
+            }
+
+            $cache = $config['doctrine'][$type];
+            foreach ($cache['entity_managers'] as $em) {
+                $definition = $this->getDoctrineCacheDefinition($container, $cache);
+                $container->setDefinition(sprintf('doctrine.orm.%s_%s', $em, $type), $definition);
+            }
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array            $cache
+     *
+     * @return Definition
+     */
+    protected function getDoctrineCacheDefinition(ContainerBuilder $container, array $cache)
+    {
+        $client = new Reference(sprintf('tree_house_cache.client.%s', $cache['client']));
+
+        $def = new Definition($container->getParameter('tree_house_cache.doctrine.cache.class'));
+        $def->addArgument($client);
+
+        if ($cache['namespace']) {
+            $def->addMethodCall('setNamespace', array($cache['namespace']));
+        }
+
+        return $def;
+    }
+
+    /**
+     * Loads the session configuration.
+     *
+     * @param array            $config    A configuration array
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     */
+    protected function loadSessionConfiguration(array $config, ContainerBuilder $container)
+    {
+        if (!isset($config['session'])) {
+            return;
+        }
+
+        $container->setParameter('tree_house_cache.session.client', $config['session']['client']);
+        $container->setParameter('tree_house_cache.session.prefix', $config['session']['prefix']);
+
+        $client = sprintf('tree_house_cache.client.%s', $config['session']['client']);
+
+        $definition = new Definition($container->getParameter('tree_house_cache.session.handler.class'));
+        $definition->addArgument(new Reference($client));
+
+        if (isset($config['session']['ttl'])) {
+            $definition->addArgument(['expiretime' => $config['session']['ttl']]);
+        }
+
+        $handlerId = 'tree_house_cache.session.handler';
+
+        $container->setDefinition($handlerId, $definition);
+        $container->setAlias('tree_house_cache.session.client', $client);
+
+        if ($config['session']['use_as_default']) {
+            $container->setAlias('session.handler', $handlerId);
+        }
     }
 }

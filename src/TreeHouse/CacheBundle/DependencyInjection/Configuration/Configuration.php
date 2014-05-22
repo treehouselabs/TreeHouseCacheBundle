@@ -15,6 +15,8 @@ class Configuration implements ConfigurationInterface
         $rootNode    = $treeBuilder->root('treehouse_cache');
 
         $this->addClientsSection($rootNode);
+        $this->addDoctrineSection($rootNode);
+        $this->addSessionSection($rootNode);
 
         return $treeBuilder;
     }
@@ -88,8 +90,21 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+            ->end()
+        ->end()
+        ;
+    }
 
-                ->arrayNode('orm')
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
+    protected function addDoctrineSection(ArrayNodeDefinition $rootNode)
+    {
+        $doctrineNode = $rootNode->children()->arrayNode('doctrine')->canBeUnset();
+
+        $doctrineNode
+            ->children()
+                ->arrayNode('cached_entity_manager')
                     ->children()
                         ->scalarNode('client')
                             ->info('The cache client you want to use for the ORM cache')
@@ -97,7 +112,48 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-        ->end()
+        ;
+
+        foreach (['metadata_cache', 'result_cache', 'query_cache'] as $type) {
+            $doctrineNode
+                ->children()
+                    ->arrayNode($type)
+                        ->canBeUnset()
+                        ->children()
+                            ->scalarNode('client')->isRequired()->end()
+                            ->scalarNode('namespace')->defaultNull()->end()
+                        ->end()
+                        ->fixXmlConfig('entity_manager')
+                        ->children()
+                            ->arrayNode('entity_managers')
+                                ->defaultValue(['default'])
+                                ->beforeNormalization()->ifString()->then(function($v) { return (array) $v; })->end()
+                                ->prototype('scalar')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ;
+        }
+    }
+
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
+    protected function addSessionSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->arrayNode('session')
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('client')->isRequired()->end()
+                        ->scalarNode('prefix')->defaultValue('session')->end()
+                        ->scalarNode('ttl')->defaultValue(86400)->end()
+                        ->scalarNode('use_as_default')->defaultValue('true')->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
     }
 }
