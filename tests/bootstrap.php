@@ -1,17 +1,9 @@
 <?php
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Composer\Autoload\ClassLoader;
 
-$file = __DIR__.'/../vendor/autoload.php';
-if (!file_exists($file)) {
-    throw new RuntimeException('Install dependencies to run test suite.');
-}
-
-/**
- * @var ClassLoader $loader
- */
-$loader = require_once $file;
-$loader->add('TreeHouse\FunctionalTestBundle', __DIR__ . '/src');
+$loader = require __DIR__ . '/../vendor/autoload.php';
+$loader->setPsr4('TreeHouse\\Getgeo\\Tests\\', __DIR__ . '/TreeHouse/Getgeo/Tests');
+$loader->setPsr4('TreeHouse\\FunctionalTestBundle\\', __DIR__ . '/src/TreeHouse/FunctionalTestBundle');
 
 AnnotationRegistry::registerLoader([$loader, 'loadClass']);

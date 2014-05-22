@@ -39,5 +39,6 @@ tree_house_cache:
     test:
       type: memcached
       dsn: memcached://localhost
-  orm:
-    client: test
+  doctrine:
+    cached_entity_manager:
+      client: test
