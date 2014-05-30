@@ -4,12 +4,12 @@ namespace TreeHouse\CacheBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use TreeHouse\Cache\Cache;
+use TreeHouse\Cache\Decorator\InMemoryCache;
 use TreeHouse\CacheBundle\DependencyInjection\Configuration\Configuration;
 use TreeHouse\CacheBundle\DependencyInjection\Configuration\MemcachedDsn;
 use TreeHouse\CacheBundle\DependencyInjection\Configuration\RedisDsn;
@@ -59,7 +59,14 @@ class TreeHouseCacheExtension extends Extension
         $client->addArgument(new Reference(sprintf('%s.driver', $id)));
         $client->addArgument(new Reference(sprintf('%s.serializer', $id)));
 
-        $container->setDefinition($id, $client);
+        if ($clientConfig['in_memory']) {
+            $mem = new Definition(InMemoryCache::class);
+            $mem->addArgument($client);
+
+            $container->setDefinition($id, $mem);
+        } else {
+            $container->setDefinition($id, $client);
+        }
     }
 
     /**
