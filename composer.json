@@ -19,9 +19,18 @@
     "treehouselabs/cache": "~1.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.1"
+    "phpunit/phpunit": "~4.1",
+    "scrutinizer/ocular": "~1.1"
   },
   "autoload": {
-    "psr-4": { "TreeHouse\\CacheBundle\\": "src/TreeHouse/CacheBundle/" }
+    "psr-4": {
+      "TreeHouse\\CacheBundle\\": "src/TreeHouse/CacheBundle/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TreeHouse\\CacheBundle\\Tests\\": "src/TreeHouse/CacheBundle/Tests/",
+      "TreeHouse\\FunctionalTestBundle\\": "tests/src/TreeHouse/FunctionalTestBundle/"
+    }
   }
 }
