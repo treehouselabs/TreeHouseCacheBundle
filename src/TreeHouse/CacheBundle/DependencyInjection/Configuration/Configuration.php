@@ -39,12 +39,11 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->enumNode('type')
                                 ->isRequired()
-                                ->values(['phpredis', 'memcached'])
+                                ->values(['phpredis', 'memcached', 'array'])
                                 ->info('The type of cache')
                             ->end()
 
                             ->scalarNode('dsn')
-                                ->isRequired()
                                 ->info(
                                     'DSN of the cache, prefix this with the protocol, ' .
                                     'ie: redis:///var/run/redis.sock or memcached://localhost:11211'

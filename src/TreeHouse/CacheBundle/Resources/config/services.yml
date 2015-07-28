@@ -3,6 +3,7 @@ parameters:
   tree_house_cache.phpredis_driver.class: TreeHouse\Cache\Driver\RedisDriver
   tree_house_cache.memcached_client.class: Memcached
   tree_house_cache.memcached_driver.class: TreeHouse\Cache\Driver\MemcachedDriver
+  tree_house_cache.array_driver.class: TreeHouse\Cache\Driver\ArrayDriver
   tree_house_cache.serializer.igbinary.class: TreeHouse\Cache\Serializer\IgbinarySerializer
   tree_house_cache.serializer.json.class: TreeHouse\Cache\Serializer\JsonSerializer
   tree_house_cache.serializer.php.class: TreeHouse\Cache\Serializer\PhpSerializer
