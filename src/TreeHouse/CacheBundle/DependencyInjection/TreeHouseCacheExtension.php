@@ -81,6 +81,9 @@ class TreeHouseCacheExtension extends Extension
     protected function getDriver($id, array $clientConfig, ContainerBuilder $container)
     {
         switch ($clientConfig['type']) {
+            case 'array':
+                $driver = $this->loadArrayDriver($container);
+                break;
             case 'phpredis':
                 $driver = $this->loadPhpredisDriver($id, $clientConfig, $container);
                 break;
@@ -90,6 +93,18 @@ class TreeHouseCacheExtension extends Extension
             default:
                 throw new \LogicException(sprintf('Unsupported client type: %s', $clientConfig['type']));
         }
+
+        return $driver;
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return Definition
+     */
+    protected function loadArrayDriver(ContainerBuilder $container)
+    {
+        $driver = new Definition($container->getParameter('tree_house_cache.array_driver.class'));
 
         return $driver;
     }
