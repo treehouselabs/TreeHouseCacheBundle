@@ -55,7 +55,7 @@ class EntityCache
      *
      * @return string
      */
-    public function getEntityClass($entity)
+    public function getEntityClassKey($entity)
     {
         if (is_object($entity)) {
             $entity = get_class($entity);
@@ -84,7 +84,16 @@ class EntityCache
      */
     public function getEntityKey($entity)
     {
-        return sprintf($this->getEntityKeyFormat(), $this->getEntityClass($entity), $entity->getId());
+        $class = get_class($entity);
+        $keys = $this->doctrine->getManagerForClass($class)->getClassMetadata($class)->getIdentifierValues($entity);
+
+        if (sizeof($keys) === 1) {
+            $id = reset($keys);
+        } else {
+            $id = json_encode($keys);
+        }
+
+        return sprintf($this->getEntityKeyFormat(), $this->getEntityClassKey($entity), $id);
     }
 
     /**
@@ -92,6 +101,10 @@ class EntityCache
      * used to store the results are changed by Doctrine (due to namespace support).
      *
      * @see https://doctrine-orm.readthedocs.org/en/latest/reference/caching.html#namespaces
+     *
+     * @param string $key
+     *
+     * @return bool
      */
     public function has($key)
     {
@@ -130,7 +143,7 @@ class EntityCache
      */
     public function registerQueryForEntity($entityName, $queryCacheKey)
     {
-        $this->register($this->getEntityClass($entityName), $queryCacheKey);
+        $this->register($this->getEntityClassKey($entityName), $queryCacheKey);
     }
 
     /**
@@ -188,7 +201,7 @@ class EntityCache
      */
     public function invalidateEntityQueries($entity)
     {
-        $this->invalidate($this->getEntityClass($entity));
+        $this->invalidate($this->getEntityClassKey($entity));
     }
 
     /**
