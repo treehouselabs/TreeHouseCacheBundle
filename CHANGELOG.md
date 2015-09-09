@@ -8,6 +8,6 @@ For a complete list of releases, see the [releases page][0].
 
 ## Next relase
 
-## v1.0.0 (upcoming)
+## v1.0.0
 
 First stable release
