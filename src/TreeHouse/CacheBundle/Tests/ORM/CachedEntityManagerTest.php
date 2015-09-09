@@ -232,7 +232,7 @@ class CachedEntityManagerTest extends WebTestCase
 
         $this->entity           = new EntityMock(1234);
         $this->entityCacheKey   = $entityCache->getEntityKey($this->entity);
-        $this->entityCacheClass = $entityCache->getEntityClass($this->entity);
+        $this->entityCacheClass = $entityCache->getEntityClassKey($this->entity);
 
         $em->persist($this->entity);
         $em->flush($this->entity);

@@ -123,7 +123,7 @@ class CachedEntityManager
         ;
 
         if ($ttl !== false) {
-            $key = sprintf($this->cache->getEntityKeyFormat(), $this->cache->getEntityClass($entity), $id);
+            $key = sprintf($this->cache->getEntityKeyFormat(), $this->cache->getEntityClassKey($entity), $id);
             $query->useResultCache(true, $ttl, $key);
         }
 

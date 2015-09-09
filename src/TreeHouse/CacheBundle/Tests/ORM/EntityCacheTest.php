@@ -41,9 +41,9 @@ class EntityCacheTest extends WebTestCase
     {
         $class = 'treehouse-functionaltestbundle-entity-entitymock';
 
-        $this->assertEquals($class, $this->cache->getEntityClass($this->entity));
-        $this->assertEquals($class, $this->cache->getEntityClass(EntityMock::class));
-        $this->assertEquals($class, $this->cache->getEntityClass('TreeHouseFunctionalTestBundle:EntityMock'));
+        $this->assertEquals($class, $this->cache->getEntityClassKey($this->entity));
+        $this->assertEquals($class, $this->cache->getEntityClassKey(EntityMock::class));
+        $this->assertEquals($class, $this->cache->getEntityClassKey('TreeHouseFunctionalTestBundle:EntityMock'));
     }
 
     public function testGetEntityKey()
@@ -189,7 +189,7 @@ class EntityCacheTest extends WebTestCase
 
         $this->entity           = new EntityMock(1234);
         $this->entityCacheKey   = $this->cache->getEntityKey($this->entity);
-        $this->entityCacheClass = $this->cache->getEntityClass($this->entity);
+        $this->entityCacheClass = $this->cache->getEntityClassKey($this->entity);
 
         $em->persist($this->entity);
         $em->flush($this->entity);
