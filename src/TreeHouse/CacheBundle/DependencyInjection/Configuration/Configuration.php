@@ -39,7 +39,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->enumNode('type')
                                 ->isRequired()
-                                ->values(['phpredis', 'memcached', 'array'])
+                                ->values(['phpredis', 'memcached', 'apc', 'array'])
                                 ->info('The type of cache')
                             ->end()
 
