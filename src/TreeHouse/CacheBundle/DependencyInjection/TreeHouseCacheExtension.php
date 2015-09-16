@@ -84,6 +84,9 @@ class TreeHouseCacheExtension extends Extension
             case 'array':
                 $driver = $this->loadArrayDriver($container);
                 break;
+            case 'apc':
+                $driver = $this->loadApcDriver($id, $clientConfig, $container);
+                break;
             case 'phpredis':
                 $driver = $this->loadPhpredisDriver($id, $clientConfig, $container);
                 break;
@@ -105,6 +108,29 @@ class TreeHouseCacheExtension extends Extension
     protected function loadArrayDriver(ContainerBuilder $container)
     {
         $driver = new Definition($container->getParameter('tree_house_cache.array_driver.class'));
+
+        return $driver;
+    }
+
+    /**
+     * Loads a APC config using phpredis.
+     *
+     * @param string           $id
+     * @param array            $config    A config configuration
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     *
+     * @throws \LogicException When Memcached extension is not loaded
+     *
+     * @return Definition
+     */
+    protected function loadApcDriver($id, array $config, ContainerBuilder $container)
+    {
+        // Check if the APC extension is loaded
+        if (!extension_loaded('apcu')) {
+            throw new \LogicException('apcu extension is not loaded');
+        }
+
+        $driver = new Definition($container->getParameter('tree_house_cache.apc_driver.class'));
 
         return $driver;
     }
