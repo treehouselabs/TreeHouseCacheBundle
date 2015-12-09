@@ -10,13 +10,13 @@ class RedisDsnTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dsnValues
      *
-     * @param string       $dsn
-     * @param string       $host
-     * @param integer|null $port
-     * @param string|null  $database
-     * @param string|null  $password
-     * @param integer|null $weight
-     * @param string|null  $alias
+     * @param string      $dsn
+     * @param string      $host
+     * @param int|null    $port
+     * @param string|null $database
+     * @param string|null $password
+     * @param int|null    $weight
+     * @param string|null $alias
      */
     public function testDsn($dsn, $host, $port = null, $database = null, $password = null, $weight = null, $alias = null)
     {

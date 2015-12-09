@@ -24,7 +24,7 @@ class TreeHouseCacheExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         // load clients
@@ -49,7 +49,7 @@ class TreeHouseCacheExtension extends Extension
      */
     protected function loadCache($id, array $clientConfig, ContainerBuilder $container)
     {
-        $driver     = $this->getDriver($id, $clientConfig, $container);
+        $driver = $this->getDriver($id, $clientConfig, $container);
         $serializer = $this->getSerializer($id, $clientConfig, $container);
 
         $container->setDefinition(sprintf('%s.driver', $id), $driver);
@@ -293,7 +293,7 @@ class TreeHouseCacheExtension extends Extension
     }
 
     /**
-     * @return integer
+     * @return int
      */
     protected function getAutoDeterminedSerializer()
     {
@@ -353,7 +353,7 @@ class TreeHouseCacheExtension extends Extension
         $def->addArgument($client);
 
         if ($cache['namespace']) {
-            $def->addMethodCall('setNamespace', array($cache['namespace']));
+            $def->addMethodCall('setNamespace', [$cache['namespace']]);
         }
 
         return $def;

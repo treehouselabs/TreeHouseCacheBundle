@@ -2,17 +2,16 @@
 
 namespace TreeHouse\CacheBundle\Tests\ORM;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\SchemaTool;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use TreeHouse\CacheBundle\ORM\CachedEntityManager;
 use TreeHouse\CacheBundle\ORM\EntityCache;
 use TreeHouse\FunctionalTestBundle\Entity\EntityMock;
 
-class CachedEntityManagerTest extends WebTestCase
+class CachedEntityManagerTest extends KernelTestCase
 {
     /**
      * @var CachedEntityManager
@@ -41,7 +40,7 @@ class CachedEntityManagerTest extends WebTestCase
 
     public function testCreateQuery()
     {
-        $dql   = 'SELECT x FROM TreeHouseFunctionalTestBundle:EntityMock x';
+        $dql = 'SELECT x FROM TreeHouseFunctionalTestBundle:EntityMock x';
         $query = $this->entityManager->createQuery($dql);
 
         $this->assertInstanceOf(Query::class, $query);
@@ -184,16 +183,6 @@ class CachedEntityManagerTest extends WebTestCase
     }
 
     /**
-     * @return ManagerRegistry
-     */
-    protected function getDoctrine()
-    {
-        $container = static::$kernel->getContainer();
-
-        return $container->get('doctrine');
-    }
-
-    /**
      * @return Query
      */
     protected function createQuery()
@@ -206,6 +195,10 @@ class CachedEntityManagerTest extends WebTestCase
 
     protected function setUp()
     {
+        if (!extension_loaded('redis')) {
+            $this->markTestSkipped('Redis extension is not loaded');
+        }
+
         parent::setUp();
 
         static::$kernel = static::createKernel();
@@ -213,8 +206,7 @@ class CachedEntityManagerTest extends WebTestCase
 
         $container = static::$kernel->getContainer();
 
-        /** @var ManagerRegistry $doctrine */
-        $doctrine = $this->getDoctrine();
+        $doctrine = $container->get('doctrine');
         /** @var EntityManager $em */
         $em = $doctrine->getManager();
 
@@ -230,24 +222,12 @@ class CachedEntityManagerTest extends WebTestCase
         // create new entity manager
         $this->entityManager = new CachedEntityManager($doctrine, $entityCache);
 
-        $this->entity           = new EntityMock(1234);
-        $this->entityCacheKey   = $entityCache->getEntityKey($this->entity);
+        $this->entity = new EntityMock(1234);
+        $this->entityCacheKey = $entityCache->getEntityKey($this->entity);
         $this->entityCacheClass = $entityCache->getEntityClassKey($this->entity);
 
         $em->persist($this->entity);
         $em->flush($this->entity);
-    }
-
-    protected function tearDown()
-    {
-        // drop database
-        $container = static::$kernel->getContainer();
-
-        /** @var EntityManager $em */
-        $em = $container->get('doctrine')->getManager();
-        (new SchemaTool($em))->dropDatabase();
-
-        parent::tearDown();
     }
 
 //    public function testInvalidationByKey()

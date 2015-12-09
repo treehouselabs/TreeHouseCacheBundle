@@ -27,18 +27,17 @@ doctrine:
     auto_mapping: true
     metadata_cache_driver: array
     result_cache_driver:
-      type:           memcached
+      type:           redis
       host:           localhost
-      port:           11211
-      instance_class: Memcached
-      class:          Doctrine\Common\Cache\MemcachedCache
+      instance_class: Redis
+      class:          Doctrine\Common\Cache\RedisCache
     naming_strategy: doctrine.orm.naming_strategy.underscore
 
 tree_house_cache:
   clients:
     test:
-      type: memcached
-      dsn: memcached://localhost
+      type: phpredis
+      dsn: redis://localhost
   doctrine:
     cached_entity_manager:
       client: test

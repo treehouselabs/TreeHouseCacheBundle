@@ -19,7 +19,7 @@ class MemcachedDsn extends Dsn
         }
 
         // parse parameters
-        $dsn = preg_replace_callback('/\?([^=]+)=[^&]+.*$/', array($this, 'parseParameters'), $dsn);
+        $dsn = preg_replace_callback('/\?([^=]+)=[^&]+.*$/', [$this, 'parseParameters'], $dsn);
 
         // parse socket/host[:port]
         if (preg_match('#^([^:]+)(:(\d+))?$#', $dsn, $matches)) {

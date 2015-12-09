@@ -29,7 +29,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "TreeHouse\\CacheBundle\\Tests\\": "src/TreeHouse/CacheBundle/Tests/",
+      "TreeHouse\\CacheBundle\\Tests\\": "tests/src/TreeHouse/CacheBundle/Tests/",
       "TreeHouse\\FunctionalTestBundle\\": "tests/src/TreeHouse/FunctionalTestBundle/"
     }
   }

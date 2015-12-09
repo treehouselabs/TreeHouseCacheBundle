@@ -45,7 +45,7 @@ class RedisDsn extends Dsn
         }
 
         // parse parameters
-        $dsn = preg_replace_callback('/\?([^=]+)=[^&]+.*$/', array($this, 'parseParameters'), $dsn);
+        $dsn = preg_replace_callback('/\?([^=]+)=[^&]+.*$/', [$this, 'parseParameters'], $dsn);
 
         // parse database
         if (preg_match('#^(.*)/(\d+)$#', $dsn, $matches)) {

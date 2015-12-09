@@ -40,7 +40,7 @@ abstract class Dsn
     protected $weight;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $dsn
      *
@@ -104,7 +104,7 @@ abstract class Dsn
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getWeight()
     {

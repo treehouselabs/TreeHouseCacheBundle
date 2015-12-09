@@ -2,8 +2,8 @@
 
 namespace TreeHouse\CacheBundle\ORM;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Cache\CacheProvider;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Proxy\Proxy;
 use TreeHouse\Cache\CacheInterface;
@@ -34,12 +34,12 @@ class EntityCache
      */
     public function __construct(CacheInterface $cache, ManagerRegistry $doctrine)
     {
-        $this->cache    = $cache;
+        $this->cache = $cache;
         $this->doctrine = $doctrine;
     }
 
     /**
-     * Returns format for cache key
+     * Returns format for cache key.
      *
      * @return string
      */
@@ -49,7 +49,7 @@ class EntityCache
     }
 
     /**
-     * Returns normalized cache key for entity class name
+     * Returns normalized cache key for entity class name.
      *
      * @param object|string $entity
      *
@@ -76,7 +76,7 @@ class EntityCache
     }
 
     /**
-     * Returns normalized cache key for entity instance
+     * Returns normalized cache key for entity instance.
      *
      * @param object $entity
      *
@@ -205,7 +205,7 @@ class EntityCache
     }
 
     /**
-     * Clears both the meta cache and Doctrine's entity cache
+     * Clears both the meta cache and Doctrine's entity cache.
      */
     public function clear()
     {

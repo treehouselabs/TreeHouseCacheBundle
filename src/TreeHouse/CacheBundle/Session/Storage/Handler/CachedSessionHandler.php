@@ -12,12 +12,12 @@ class CachedSessionHandler implements \SessionHandlerInterface
     protected $cache;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $ttl;
 
     /**
-     * Key prefix for shared environments
+     * Key prefix for shared environments.
      *
      * @var string
      */
@@ -37,14 +37,14 @@ class CachedSessionHandler implements \SessionHandlerInterface
      */
     public function __construct(CacheInterface $cache, array $options = [])
     {
-        if ($diff = array_diff(array_keys($options), array('prefix', 'expiretime'))) {
+        if ($diff = array_diff(array_keys($options), ['prefix', 'expiretime'])) {
             throw new \InvalidArgumentException(sprintf(
                 'The following options are not supported "%s"', implode(', ', $diff)
             ));
         }
 
-        $this->cache  = $cache;
-        $this->ttl    = isset($options['expiretime']) ? (int) $options['expiretime'] : 86400;
+        $this->cache = $cache;
+        $this->ttl = isset($options['expiretime']) ? (int) $options['expiretime'] : 86400;
         $this->prefix = isset($options['prefix']) ? $options['prefix'] : 'sf2s';
     }
 
