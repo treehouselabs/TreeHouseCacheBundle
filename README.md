@@ -54,7 +54,7 @@ Some concepts and/or implementations are borrowed from [SncRedisBundle](https://
 
 ## Credits
 
-- [Peter Kruithof][link-pkruithof]
+- [Peter Kruithof][link-author]
 - [All Contributors][link-contributors]
 
 
