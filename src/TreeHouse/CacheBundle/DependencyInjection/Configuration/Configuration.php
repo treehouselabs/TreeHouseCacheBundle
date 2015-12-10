@@ -5,14 +5,13 @@ namespace TreeHouse\CacheBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use TreeHouse\Cache\CacheInterface;
 
 class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode    = $treeBuilder->root('treehouse_cache');
+        $rootNode = $treeBuilder->root('treehouse_cache');
 
         $this->addClientsSection($rootNode);
         $this->addDoctrineSection($rootNode);
@@ -22,7 +21,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Adds the treehouse_cache.clients configuration
+     * Adds the treehouse_cache.clients configuration.
      *
      * @param ArrayNodeDefinition $rootNode
      */
@@ -126,7 +125,7 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->arrayNode('entity_managers')
                                 ->defaultValue(['default'])
-                                ->beforeNormalization()->ifString()->then(function($v) { return (array) $v; })->end()
+                                ->beforeNormalization()->ifString()->then(function ($v) { return (array) $v; })->end()
                                 ->prototype('scalar')->end()
                             ->end()
                         ->end()

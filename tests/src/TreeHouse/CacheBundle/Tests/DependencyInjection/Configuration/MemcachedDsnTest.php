@@ -9,11 +9,11 @@ class MemcachedDsnTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dsnValues
      *
-     * @param string       $dsn
-     * @param string       $host
-     * @param integer|null $port
-     * @param string|null  $password
-     * @param integer|null $weight
+     * @param string      $dsn
+     * @param string      $host
+     * @param int|null    $port
+     * @param string|null $password
+     * @param int|null    $weight
      */
     public function testDsn($dsn, $host, $port = null, $password = null, $weight = null)
     {

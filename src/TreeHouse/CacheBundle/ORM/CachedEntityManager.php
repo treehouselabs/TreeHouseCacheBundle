@@ -47,7 +47,7 @@ class CachedEntityManager
     public function __construct(ManagerRegistry $doctrine, EntityCache $cache)
     {
         $this->doctrine = $doctrine;
-        $this->cache    = $cache;
+        $this->cache = $cache;
     }
 
     /**
@@ -99,7 +99,7 @@ class CachedEntityManager
     /**
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function has($key)
     {
@@ -107,9 +107,9 @@ class CachedEntityManager
     }
 
     /**
-     * @param string       $entity
-     * @param integer      $id
-     * @param integer|null $ttl
+     * @param string   $entity
+     * @param int      $id
+     * @param int|null $ttl
      *
      * @return object|null
      */
@@ -131,9 +131,9 @@ class CachedEntityManager
     }
 
     /**
-     * @param Query        $query
-     * @param integer|null $ttl
-     * @param string|null  $key
+     * @param Query       $query
+     * @param int|null    $ttl
+     * @param string|null $key
      *
      * @return array
      */

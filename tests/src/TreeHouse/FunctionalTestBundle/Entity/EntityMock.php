@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EntityMock
 {
     /**
-     * @var integer $id
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
