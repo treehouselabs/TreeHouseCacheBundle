@@ -1,43 +1,43 @@
 framework:
-  secret:          secret
+  secret:          'secret'
   test:            ~
-  router:          { resource: "%kernel.root_dir%/routing_test.yml" }
+  router:          { resource: '%kernel.root_dir%/routing_test.yml' }
   form:            true
   csrf_protection: true
   validation:      { enable_annotations: true }
   templating:      { engines: ['twig'] }
   session:
-    storage_id:    session.storage.mock_file
+    storage_id:    'session.storage.mock_file'
   profiler:        { only_exceptions: false }
 
 doctrine:
   dbal:
-    driver:   pdo_sqlite
+    driver:   'pdo_sqlite'
     host:     ~
     port:     ~
     dbname:   ~
     user:     ~
     password: ~
-    logging:  %kernel.debug%
-    path:     "/tmp/data.sqlite"
-    charset:  UTF8
+    logging:  '%kernel.debug%'
+    path:     '/tmp/data.sqlite'
+    charset:  'UTF8'
 
   orm:
-    auto_generate_proxy_classes: %kernel.debug%
+    auto_generate_proxy_classes: '%kernel.debug%'
     auto_mapping: true
-    metadata_cache_driver: array
+    metadata_cache_driver: 'array'
     result_cache_driver:
-      type:           redis
-      host:           localhost
-      instance_class: Redis
-      class:          Doctrine\Common\Cache\RedisCache
-    naming_strategy: doctrine.orm.naming_strategy.underscore
+      type:           'redis'
+      host:           'localhost'
+      instance_class: 'Redis'
+      class:          'Doctrine\Common\Cache\RedisCache'
+    naming_strategy:  'doctrine.orm.naming_strategy.underscore'
 
 tree_house_cache:
   clients:
     test:
-      type: phpredis
-      dsn: redis://localhost
+      type: 'phpredis'
+      dsn: 'redis://localhost'
   doctrine:
     cached_entity_manager:
-      client: test
+      client: 'test'

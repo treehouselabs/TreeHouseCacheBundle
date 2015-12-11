@@ -9,6 +9,13 @@ For a complete list of releases, see the [releases page][0].
 ## Next release
 
 
+## v1.2.0
+
+### Changes
+
+* Added support for Symfony3
+
+
 ## v1.1.0
 
 ### Changes

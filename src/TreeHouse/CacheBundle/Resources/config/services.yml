@@ -1,33 +1,34 @@
 parameters:
-  tree_house_cache.phpredis_client.class: Redis
-  tree_house_cache.phpredis_driver.class: TreeHouse\Cache\Driver\RedisDriver
-  tree_house_cache.memcached_client.class: Memcached
-  tree_house_cache.memcached_driver.class: TreeHouse\Cache\Driver\MemcachedDriver
-  tree_house_cache.apc_driver.class: TreeHouse\Cache\Driver\ApcDriver
-  tree_house_cache.array_driver.class: TreeHouse\Cache\Driver\ArrayDriver
-  tree_house_cache.serializer.igbinary.class: TreeHouse\Cache\Serializer\IgbinarySerializer
-  tree_house_cache.serializer.json.class: TreeHouse\Cache\Serializer\JsonSerializer
-  tree_house_cache.serializer.php.class: TreeHouse\Cache\Serializer\PhpSerializer
-  tree_house_cache.doctrine.cache.class: TreeHouse\Cache\Adapter\DoctrineAdapter
-  tree_house_cache.session.handler.class: TreeHouse\CacheBundle\Session\Storage\Handler\CachedSessionHandler
+  tree_house_cache.phpredis_client.class: 'Redis'
+  tree_house_cache.phpredis_driver.class: 'TreeHouse\Cache\Driver\RedisDriver'
+  tree_house_cache.memcached_client.class: 'Memcached'
+  tree_house_cache.memcached_driver.class: 'TreeHouse\Cache\Driver\MemcachedDriver'
+  tree_house_cache.apc_driver.class: 'TreeHouse\Cache\Driver\ApcDriver'
+  tree_house_cache.array_driver.class: 'TreeHouse\Cache\Driver\ArrayDriver'
+  tree_house_cache.serializer.igbinary.class: 'TreeHouse\Cache\Serializer\IgbinarySerializer'
+  tree_house_cache.serializer.json.class: 'TreeHouse\Cache\Serializer\JsonSerializer'
+  tree_house_cache.serializer.php.class: 'TreeHouse\Cache\Serializer\PhpSerializer'
+  tree_house_cache.doctrine.cache.class: 'TreeHouse\Cache\Adapter\DoctrineAdapter'
+  tree_house_cache.session.handler.class: 'TreeHouse\CacheBundle\Session\Storage\Handler\CachedSessionHandler'
 
 services:
   tree_house_cache.orm.entity_cache:
-    class: TreeHouse\CacheBundle\ORM\EntityCache
+    class: 'TreeHouse\CacheBundle\ORM\EntityCache'
     arguments:
       - ~ # injected
-      - @doctrine
+      - '@doctrine'
 
   tree_house_cache.orm.cached_entity_manager:
-    class: TreeHouse\CacheBundle\ORM\CachedEntityManager
+    class: 'TreeHouse\CacheBundle\ORM\CachedEntityManager'
     arguments:
-      - @doctrine
-      - @tree_house_cache.orm.entity_cache
+      - '@doctrine'
+      - '@tree_house_cache.orm.entity_cache'
 
   tree_house_cache.listener.cache_invalidation:
-    class: TreeHouse\CacheBundle\EventListener\CacheInvalidationListener
-    arguments: [@tree_house_cache.orm.entity_cache]
+    class: 'TreeHouse\CacheBundle\EventListener\CacheInvalidationListener'
+    arguments:
+      - '@tree_house_cache.orm.entity_cache'
     tags:
-      - { name: doctrine.event_listener, event: postUpdate }
-      - { name: doctrine.event_listener, event: postPersist }
-      - { name: doctrine.event_listener, event: preRemove }
+      - { name: 'doctrine.event_listener', event: 'postUpdate' }
+      - { name: 'doctrine.event_listener', event: 'postPersist' }
+      - { name: 'doctrine.event_listener', event: 'preRemove' }
