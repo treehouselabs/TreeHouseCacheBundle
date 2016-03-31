@@ -87,6 +87,12 @@ class TreeHouseCacheExtension extends Extension
             case 'apc':
                 $driver = $this->loadApcDriver($id, $clientConfig, $container);
                 break;
+            case 'apcu':
+                $driver = $this->loadApcuDriver($id, $clientConfig, $container);
+                break;
+            case 'file':
+                $driver = $this->loadFileDriver($id, $clientConfig, $container);
+                break;
             case 'phpredis':
                 $driver = $this->loadPhpredisDriver($id, $clientConfig, $container);
                 break;
@@ -113,21 +119,21 @@ class TreeHouseCacheExtension extends Extension
     }
 
     /**
-     * Loads a APC config using phpredis.
+     * Loads an APC config.
      *
      * @param string           $id
      * @param array            $config    A config configuration
      * @param ContainerBuilder $container A ContainerBuilder instance
      *
-     * @throws \LogicException When Memcached extension is not loaded
+     * @throws \LogicException When apc extension is not loaded
      *
      * @return Definition
      */
     protected function loadApcDriver($id, array $config, ContainerBuilder $container)
     {
         // Check if the APC extension is loaded
-        if (!extension_loaded('apcu')) {
-            throw new \LogicException('apcu extension is not loaded');
+        if (!extension_loaded('apc')) {
+            throw new \LogicException('apc extension is not loaded');
         }
 
         $driver = new Definition($container->getParameter('tree_house_cache.apc_driver.class'));
@@ -136,7 +142,57 @@ class TreeHouseCacheExtension extends Extension
     }
 
     /**
-     * Loads a redis config using phpredis.
+     * Loads an APCu config.
+     *
+     * @param string           $id
+     * @param array            $config    A config configuration
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     *
+     * @throws \LogicException When apcu extension is not loaded
+     *
+     * @return Definition
+     */
+    protected function loadApcuDriver($id, array $config, ContainerBuilder $container)
+    {
+        // Check if the APCu extension is loaded
+        if (!extension_loaded('apcu')) {
+            throw new \LogicException('apcu extension is not loaded');
+        }
+
+        $driver = new Definition($container->getParameter('tree_house_cache.apcu_driver.class'));
+
+        return $driver;
+    }
+
+    /**
+     * Loads a file config.
+     *
+     * @param string           $id
+     * @param array            $config    A config configuration
+     * @param ContainerBuilder $container A ContainerBuilder instance
+     *
+     * @return Definition
+     */
+    protected function loadFileDriver($id, array $config, ContainerBuilder $container)
+    {
+        if (empty($config['directory'])) {
+            throw new \LogicException('Specify a directory when using the "file" cache type');
+        }
+
+        if (!file_exists($config['directory'])) {
+            if (false === @mkdir($config['directory'], 0777, true)) {
+                throw new \LogicException(sprintf('Could not create directory "%s"', $config['directory']));
+            }
+        }
+
+        $driver = new Definition($container->getParameter('tree_house_cache.file_driver.class'));
+        $driver->addArgument($config['directory']);
+
+        return $driver;
+    }
+
+    /**
+     * Loads a Redis config.
      *
      * @param string           $id
      * @param array            $config    A config configuration
@@ -193,7 +249,7 @@ class TreeHouseCacheExtension extends Extension
     }
 
     /**
-     * Loads a redis config using phpredis.
+     * Loads a Memcached config.
      *
      * @param string           $id
      * @param array            $config    A config configuration

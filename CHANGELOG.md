@@ -9,6 +9,14 @@ For a complete list of releases, see the [releases page][0].
 ## Next release
 
 
+## v1.3.0
+
+### Changes
+
+* Updated cache library constraint
+* Added support for apcu and file caches
+
+
 ## v1.2.0
 
 ### Changes
