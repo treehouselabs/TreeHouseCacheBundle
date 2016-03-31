@@ -1,7 +1,7 @@
 {
   "name": "treehouselabs/cache-bundle",
   "type": "symfony-bundle",
-  "description": "Symfony2 bundle that provides easy setup for caching, including a powerful ORM cache",
+  "description": "Symfony2 bundle that provides easy setup for caching, including a powerful ORM cache [DEPRECATED]",
   "keywords": ["cache"],
   "license": "MIT",
   "authors": [
